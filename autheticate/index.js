@@ -1,5 +1,5 @@
 const passport = require("passport")
-const User = require("../schemas/user")
+const Profiles = require("../schemas/profiles")
 const JwtStrategy = require("passport-jwt").Strategy
 const ExtractJwt = require("passport-jwt").ExtractJwt
 const jwt = require("jsonwebtoken")
@@ -10,11 +10,11 @@ var options = {
     secretOrKey: "65198198151654719165121613165161"
 } 
 
-passport.serializeUser(User.serializeUser())
-passport.deserializeUser(User.deserializeUser())
-passport.use(new LocalStrategy(User.authenticate()))//enable username/password verification
+passport.serializeUser(Profiles.serializeUser())
+passport.deserializeUser(Profiles.deserializeUser())
+passport.use(new LocalStrategy(Profiles.authenticate()))//enable username/password verification
 passport.use(new JwtStrategy(options, (jwt_payload, done) => {
-    User.findById(jwt_payload._id, (err, user) => {
+    Profiles.findById(jwt_payload._id, (err, user) => {
         if (err)
             return done(err, false)
         else if (user)
