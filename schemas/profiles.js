@@ -39,7 +39,7 @@ const Profiles = new Schema({
 
 Profiles.plugin(passportLocalMongoose)
 
-module.exports = Profiles;
+module.exports = mongoose.model("Profiles", Profiles);
 
 
 // User.plugin(passportLocalMongoose)
