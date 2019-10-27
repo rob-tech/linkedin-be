@@ -22,11 +22,11 @@ router.get("/", (req, res, next) => {
 
 router.post("/register", async (req, res) => {
 
-    var find = await Profiles.find({ username: req.user })
+    var find = await Profiles.find( {user: req.body})
 
     if (find.length > 0) {
         res.statusCode = 400;
-        res.send("We already have the username" + "'" + req.user + "'" + "on our system")
+        res.send("We already have the username" + "'" + req.body.username + "'" + "on our system")
     }
     else {
         req.body.username = req.user;
@@ -35,6 +35,7 @@ router.post("/register", async (req, res) => {
             var newProfile = await Profiles.create(req.body);
             newProfile = await Profiles.register(newProfile, req.body.password)
             res.send(newProfile)
+            console.log(newProfile)
 
         }
         catch (err) {
@@ -45,7 +46,7 @@ router.post("/register", async (req, res) => {
             });
         }
 
-        var token = auth.getToken({ _id: newUser._id })
+        var token = auth.getToken({ _id: newProfile._id })
 
         res.statusCode = 200
         res.json({
