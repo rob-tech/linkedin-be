@@ -3,7 +3,7 @@ const cors = require("cors")
 const auth = require("./autheticate/index")
 // var userRouter = require("./routes/userRouter")
 // var postRouter = require("./routes/postRouter")
-var profileRouter = require("./routes/profileRouter")
+const userRouter = require("./routes/userRouter")
 const mongoose = require("mongoose")
 const passport = require("passport")
 
@@ -17,7 +17,7 @@ server.use(passport.initialize())
 
 // server.use("/users", userRouter)
 // server.use("/posts", postRouter)
-server.use("/users", profileRouter)
+server.use("/users", userRouter)
 
 server.get("/authenticate", auth.verifyUser, auth.adminOnly, (req, res) => {
   res.send(req.user)
@@ -25,7 +25,7 @@ server.get("/authenticate", auth.verifyUser, auth.adminOnly, (req, res) => {
 
 mongoose.connect("mongodb+srv://diegostriveschool:h6nxg5U9SDcsLA26@cluster0-3ar0p.azure.mongodb.net/test?retryWrites=true&w=majority", {
   useNewUrlParser: true
-}).then(server.listen(3000, () => {
+}).then(server.listen(8000, () => {
   console.log("Server running on port 3000");
 })).catch(err => console.log(err))
 
