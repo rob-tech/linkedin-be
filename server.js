@@ -23,7 +23,7 @@ server.get("/authenticate", auth.verifyUser, auth.adminOnly, (req, res) => {
   res.send(req.user)
 })
 
-mongoose.connect("mongodb+srv://diegostriveschool:h6nxg5U9SDcsLA26@cluster0-3ar0p.azure.mongodb.net/test?retryWrites=true&w=majority", {
+mongoose.connect(mongoConnect, {
   useNewUrlParser: true
 }).then(server.listen(process.env.PORT || 3000, () => {
   console.log("Server running on port 3000");

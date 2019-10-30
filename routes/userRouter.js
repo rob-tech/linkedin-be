@@ -7,7 +7,7 @@ const MulterAzureStorage = require('multer-azure-storage')
 
 var upload = multer({
     storage: new MulterAzureStorage({
-        azureStorageConnectionString: 'DefaultEndpointsProtocol=https;AccountName=striveteststorage;AccountKey=mV5P96PlB4nmB+B6SNg+mZoSwUKF/3L8fWR21iKociiCJ7x35GQwGp7zz3qv2SsoltlRajuiK2yKqBw2KJ5wag==;EndpointSuffix=core.windows.net',
+        azureStorageConnectionString: process.env.AzureConnectionPass,
         containerName: 'images',
         containerSecurity: 'blob'
     })
