@@ -32,4 +32,3 @@ mongoose.connect(mongoConnect, {
 // server.listen(3000, () => {
 //   console.log("Server running on port 3000")
 // })
-//mongodb+srv://diegostriveschool:h6nxg5U9SDcsLA26@cluster0-3ar0p.azure.mongodb.net/test?retryWrites=true&w=majority
