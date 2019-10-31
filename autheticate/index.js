@@ -12,7 +12,7 @@ var options = {
 
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
-passport.use(new LocalStrategy(User.authenticate()))//enable username/password verification
+passport.use(new LocalStrategy(User.authenticate()))
 passport.use(new JwtStrategy(options, (jwt_payload, done) => {
     User.findById(jwt_payload._id, (err, user) => {
         if (err)

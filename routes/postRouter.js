@@ -1,38 +1,35 @@
-// const express = require('express');
-// const bodyParser = require('body-parser');
-// const atob = require("atob");
-// const multer = require("multer")
-// var path = require('path')
-// const fs = require("fs-extra")
+const express = require('express');
+const bodyParser = require('body-parser');
+const multer = require("multer")
+var path = require('path')
+const fs = require("fs-extra")
+var Posts = require("../schemas/post");
 
-// const multerCfg = multer({})
+const multerCfg = multer({})
 
-// const postRouter = express.Router();
+const router = express.Router();
 
-// postRouter.use(bodyParser.json());
 
-// var Posts = require("../schemas/posts");
-
-// postRouter.route('/')
-//     .get((req, res, next) => {
-//         Posts.find({}).then(app => {
-//             res.json(app);
-//         })
-//     })
-//     .post(async (req, res, next) => {
-//         req.body.username = req.user;
-//         try {
-//             var newpost = await Posts.create(req.body);
-//             res.send(newpost)
-//         }
-//         catch (err) {
-//             res.status(err.status || 500);
-//             res.json({
-//                 message: err.message,
-//                 error: err
-//             });
-//         }
-//     })
+router.route('/')
+    .get((req, res, next) => {
+        Posts.find({}).then(app => {
+            res.json(app);
+        })
+    })
+    .post(async (req, res, next) => {
+        req.body.username = req.user;
+        try {
+            var newpost = await Posts.create(req.body);
+            res.send(newpost)
+        }
+        catch (err) {
+            res.status(err.status || 500);
+            res.json({
+                message: err.message,
+                error: err
+            });
+        }
+    })
 
 // postRouter.route('/:postId')
 //     .get(async (req, res) => {
@@ -105,4 +102,4 @@
 //     })
 
 
-// module.exports = postRouter;
+module.exports = router;

@@ -5,9 +5,11 @@ const passport = require("passport")
 const multer = require('multer')
 const MulterAzureStorage = require('multer-azure-storage')
 
+require('dotenv').config()
+
 var upload = multer({
     storage: new MulterAzureStorage({
-        azureStorageConnectionString: process.env.AzureConnectionPass,
+        azureStorageConnectionString: process.env.azureStorageConnectionString,
         containerName: 'images',
         containerSecurity: 'blob'
     })
@@ -38,20 +40,11 @@ router.post("/register", async (req, res) => {
         token: token,
         success: true,
     })
+
 })
 
-router.post("/login", passport.authenticate("local"), (req, res) => {
-    var token = auth.getToken({ _id: req.user._id })
-    res.statusCode = 200
-    res.json({
-        status: "Login Ok",
-        user: req.user,
-        token: token,
-        success: true,
-    })
-})
 
-router.get("/:username", auth.verifyUser, (req, res) => {
+router.get("/:username", (req, res) => {
     User.findOne(
         { username: req.params.username }
     )
@@ -64,7 +57,7 @@ router.get("/:username", auth.verifyUser, (req, res) => {
         .catch(err => next(err));
 })
 
-router.post("/refresh", auth.verifyUser, (req, res) => {
+router.post("/refresh", (req, res) => {
     var token = auth.getToken({ _id: req.user._id })
     res.statusCode = 200
     res.json({
