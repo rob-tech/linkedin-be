@@ -27,7 +27,7 @@ passport.use(new JwtStrategy(options, (jwt_payload, done) => {
 
 module.exports = {
     getToken: (user) => {
-        return jwt.sign(user, options.secretOrKey, { expiresIn: 3600 })
+        return jwt.sign(user, options.secretOrKey, { expiresIn: 10800 })
     },
  
     verifyUser: passport.authenticate("jwt", {session: false}),
