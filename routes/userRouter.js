@@ -7,13 +7,13 @@ const MulterAzureStorage = require('multer-azure-storage')
 
 require('dotenv').config()
 
-var upload = multer({
-    storage: new MulterAzureStorage({
-        azureStorageConnectionString: process.env.azureStorageConnectionString,
-        containerName: 'images',
-        containerSecurity: 'blob'
-    })
-})
+// var upload = multer({
+//     storage: new MulterAzureStorage({
+//         azureStorageConnectionString: process.env.azureStorageConnectionString,
+//         containerName: 'images',
+//         containerSecurity: 'blob'
+//     })
+// })
 
 
 const router = express.Router();
@@ -69,18 +69,18 @@ router.post("/refresh", (req, res) => {
 
 })
 
-router.post("/:userId/upload", upload.single("img"), async (req, res) => {
-    var user = await User.findById(req.params.userId)
-    if (user) {
-        User.findByIdAndUpdate(req.params.userId, {
-            image: req.file.url
-        })
-        res.send(user)
-    } else {
-        res.send("user not found")
-    }
+// router.post("/:userId/upload", upload.single("img"), async (req, res) => {
+//     var user = await User.findById(req.params.userId)
+//     if (user) {
+//         User.findByIdAndUpdate(req.params.userId, {
+//             image: req.file.url
+//         })
+//         res.send(user)
+//     } else {
+//         res.send("user not found")
+//     }
 
-})
+// })
 
 
 

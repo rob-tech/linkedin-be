@@ -17,7 +17,8 @@ router.route('/')
         })
     })
     .post(async (req, res, next) => {
-        req.body.username = req.user;
+    
+        req.body.username = req.user.username;
         try {
             var newpost = await Posts.create(req.body);
             res.send(newpost)
