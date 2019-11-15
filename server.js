@@ -1,6 +1,5 @@
 const express = require("express")
 const cors = require("cors")
-// var userRouter = require("./routes/userRouter")
 const auth = require("./autheticate/index")
 const userRouter = require("./routes/userRouter")
 const loginRouter = require("./routes/loginRouter")
@@ -8,29 +7,44 @@ const postRouter = require("./routes/postRouter")
 const mongoose = require("mongoose")
 const passport = require("passport")
 
+const http = require("http");
+const socketio = require("socket.io");
+
 require('dotenv').config()
 
-const server = express()
+const app = express()
+app.use(cors())
+const port = process.env.PORT || 3000;
+app.set("port", port)
+const server = http.createServer(app).listen(app.get("port"));
 
-server.use(cors())
-server.use(express.json());
-server.use(passport.initialize())
 
-// server.use("/users", userRouter)
-// server.use("/posts", postRouter)
-server.use("/users", auth.verifyUser, userRouter)
-server.use("/login", loginRouter)
-server.use("/feeds", auth.verifyUser, postRouter)
+const io = socketio(server);
 
-server.get("/authenticate", auth.verifyUser, auth.adminOnly, (req, res) => {
+io.set('transports', ["websocket"])
+
+io.on("connection", socket => {
+  console.log("New Connection");
+
+})
+
+
+app.use(express.json());
+app.use(passport.initialize())
+
+app.use("/users", auth.verifyUser, userRouter)
+app.use("/login", loginRouter)
+app.use("/feeds",  auth.verifyUser, postRouter)
+
+app.get("/authenticate", auth.verifyUser, auth.adminOnly, (req, res) => {
   res.send(req.user)
 })
 
 mongoose.connect(process.env.Connect, {
   useNewUrlParser: true
-}).then(server.listen(process.env.PORT || 3000, () => {
+}).then( () => {
   console.log("Server running on port 3000");
-})).catch(err => console.log(err))
+}).catch(err => console.log(err))
 
 // server.listen(3000, () => {
 //   console.log("Server running on port 3000")

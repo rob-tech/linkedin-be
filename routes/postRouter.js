@@ -30,7 +30,27 @@ router.route('/')
                 error: err
             });
         }
+        
     })
+        // .delete(("/:postId"), async (req, res) => {
+        // var post = await Posts.findById(req.params.postId);
+        // if (post.username == req.user.username) {
+        //     Posts.findByIdAndRemove(
+        //         req.params.postId
+        //     )
+        //         .then(
+        //             app => {
+        //                 res.send("Removed");
+        //             },
+        //             err => next(err)
+        //         )
+        //         .catch(err => next(err));
+        // }
+        // else {
+        //                 res.status(401)
+        //                 res.send("Unauthorized")
+        //             }
+        // })
 
 // postRouter.route('/:postId')
 //     .get(async (req, res) => {
